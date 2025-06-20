@@ -1,6 +1,9 @@
-go 1.24.3
+go 1.24.4
 
 use (
 	./hello-go
 	./variables
+	./console-app
+	./hammer-bitcoin
+	./string-interpolation
 )
