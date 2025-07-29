@@ -1,4 +1,4 @@
-go 1.24.4
+go 1.24.5
 
 use (
 	./hello-go
@@ -6,4 +6,5 @@ use (
 	./console-app
 	./hammer-bitcoin
 	./string-interpolation
+	./rock-paper-scissors-web
 )
