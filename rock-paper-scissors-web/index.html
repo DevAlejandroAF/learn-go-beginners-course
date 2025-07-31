@@ -16,17 +16,36 @@
 
     <p id="player_choice">&nbsp;</p>
     <p id="computer_choice">&nbsp;</p>
-    <p id="round_result">&nbsp;</p>
+    <p id="round_result" class="text-success">&nbsp;</p>
 
     <hr>
     <br>
     <p>Choose rock, paper or scissors</p>
     <br>
 
-    <button class="btn btn-outline-secondary">Rock</button>
-    <button class="btn btn-outline-danger">Paper</button>
-    <button class="btn btn-outline-success">Scissors</button>
+    <button class="btn btn-outline-secondary" onclick="choose(0)">Rock</button>
+    <button class="btn btn-outline-danger" onclick="choose(1)">Paper</button>
+    <button class="btn btn-outline-success" onclick="choose(2)">Scissors</button>
   </main>
 </body>
+
+<script>
+  function choose(x) {
+    fetch("/play?c=" + x)
+      .then(response => response.json())
+      .then(data => {
+        if (x == 0) {
+          document.querySelector("#player_choice").innerHTML = "Player chose ROCK";
+        } else if (x == 1) {
+          document.querySelector("#player_choice").innerHTML = "Player chose PAPER";
+        } else {
+          document.querySelector("#player_choice").innerHTML = "Player chose SCISSORS";
+        }
+        document.querySelector("#computer_choice").innerHTML = data.computer_choice;
+        document.querySelector("#round_result").innerHTML = data.round_result;
+      })
+
+  }
+</script>
 
 </html>

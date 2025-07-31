@@ -14,7 +14,13 @@ const (
 	DRAW         = 3
 )
 
-func PlayRound(playerValue int) (int, string, string) {
+type Round struct {
+	Winner         int    `json:"winner"`
+	ComputerChoice string `json:"computer_choice"`
+	RoundResult    string `json:"round_result"`
+}
+
+func PlayRound(playerValue int) Round {
 	rand.NewSource(time.Now().UnixNano())
 	computerValue := rand.Intn(3)
 	computerChoice := ""
@@ -27,7 +33,7 @@ func PlayRound(playerValue int) (int, string, string) {
 	case PAPER:
 		computerChoice = "Computer chose PAPER"
 	case SCISSORS:
-		computerChoice = "Cumputer chose SCISSORS"
+		computerChoice = "Computer chose SCISSORS"
 	default:
 	}
 
@@ -42,5 +48,11 @@ func PlayRound(playerValue int) (int, string, string) {
 		winner = COMPUTERWINS
 	}
 
-	return winner, computerChoice, roundResult
+	result := Round{
+		Winner:         winner,
+		ComputerChoice: computerChoice,
+		RoundResult:    roundResult,
+	}
+
+	return result
 }

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 
 	"example.com/mywebapp/rps"
 )
@@ -13,8 +15,15 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func playRound(w http.ResponseWriter, r *http.Request) {
-	winner, computerChoice, roundResult := rps.PlayRound(1)
-	log.Println(winner, computerChoice, roundResult)
+	playerChoice, _ := strconv.Atoi(r.URL.Query().Get("c"))
+	result := rps.PlayRound(playerChoice)
+	out, err := json.MarshalIndent(result, "", "	")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func main() {
